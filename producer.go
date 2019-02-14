@@ -4,16 +4,14 @@ import (
 	"github.com/streadway/amqp"
 )
 
+//Producer representa a un productor de mensajes
 type Producer struct {
 	url   string
 	queue string
 }
 
+// NewProducer crea un nuevo productor para poner mensajes en una cola determinada
 func NewProducer(brokerUrl string, queueName string) *Producer {
-	//result := new(Producer)
-	//result.queue = queueName
-	//	result.url = brokerUrl
-	//return result
 	return &Producer{brokerUrl, queueName}
 }
 
@@ -30,6 +28,8 @@ func (p *Producer) createQueue(ch *amqp.Channel) (amqp.Queue, error) {
 	return q, err
 }
 
+// Put Pone un mensaje en una cola
+//todo: esto habria que cambiarlo a []byte
 func (p *Producer) Put(mensaje string) error {
 	conn, err := amqp.Dial(p.url)
 	if err != nil {

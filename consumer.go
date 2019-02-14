@@ -115,7 +115,7 @@ func (c *Consumer) Listen() (chan []byte, error) {
 		for {
 			<-c.ticker.C
 			read()
-			if atomic.LoadInt32(&c.shutdown) != on {
+			if c.isOff() {
 				defer close(messages)
 				defer ch.Close()
 				defer conn.Close()
